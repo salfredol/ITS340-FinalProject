@@ -19,40 +19,17 @@ public class DBUtils_Demog
         return rs;
     }
     public static int InsertPatient(Connection conn, 
-            String fName, String lName, String prevLast, String mobPhone, String homePhone, 
-            String emPhone, String email, String hcp, String ssn, String dob, 
-            String marital, String gender, String address, String city, String state, 
-            String zip, String country, String citizenship, String ethnicity, String nextOfKin, 
-            String nokRelation, String comments)
+            String fName, String lName, String homePhone, String ssn)
     {
         int insertStatus = 0;
         try
         {
-            String qryStoredProc = "{CALL InsertPatient(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,"
-                    + " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+            String qryStoredProc = "{CALL InsertPatient(?, ?, ?, ?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
             cs.setString(1, fName);
             cs.setString(2, lName);
-            cs.setString(3, prevLast);
-            cs.setString(4, mobPhone);
-            cs.setString(5, homePhone);
-            cs.setString(6, emPhone);
-            cs.setString(7, email);
-            cs.setString(8, hcp);
-            cs.setString(9, ssn);
-            cs.setString(10, dob);
-            cs.setString(11, marital);
-            cs.setString(12, gender);
-            cs.setString(13, address);
-            cs.setString(14, city);
-            cs.setString(15, state);
-            cs.setString(16, zip);
-            cs.setString(17, country);
-            cs.setString(18, citizenship);
-            cs.setString(19, ethnicity);
-            cs.setString(20, nextOfKin);
-            cs.setString(21, nokRelation);
-            cs.setString(22, comments);
+            cs.setString(3, homePhone);
+            cs.setString(4, ssn);
             
             insertStatus = cs.executeUpdate();
             return insertStatus;
@@ -135,5 +112,19 @@ public class DBUtils_Demog
             System.out.println(e.getMessage() );
         }
         return rs;
+    }
+    public static void DeletePatient(Connection conn, int pid)
+    {
+        try
+        {
+            String qryStoredProc = "{CALL DeletePatient(?)}";
+            CallableStatement cs = conn.prepareCall(qryStoredProc);
+            cs.setInt(1, pid);
+            cs.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage() );
+        }
     }
 }

@@ -121,6 +121,7 @@ public class DBUtils_Demog
             CallableStatement cs = conn.prepareCall(qryStoredProc);
             cs.setInt(1, pid);
             cs.executeUpdate();
+            //maybe add integer return to confirm successful deletion
         }
         catch(Exception e)
         {

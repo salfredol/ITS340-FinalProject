@@ -691,8 +691,8 @@ public class Demographics extends javax.swing.JFrame {
             Connection conn = GlobalData.ConnectToDB("root", "password");
             DBUtils_Demog.InsertPatient(conn, txt_firstname.getText(), txt_lastname.getText(),
                     txt_homephone.getText(), txt_ssn.getText());
+            //maybe add a confirmation swing popup here
             
-
             //retrieve all after inserting 
             ResultSet rs = DBUtils_Demog.GetAllPatients(conn);
 

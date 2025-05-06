@@ -328,7 +328,7 @@ public class Demographics extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_save, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                    .addComponent(btn_save, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_edit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -368,7 +368,7 @@ public class Demographics extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -690,10 +690,10 @@ public class Demographics extends javax.swing.JFrame {
         {
             Connection conn = GlobalData.ConnectToDB("root", "password");
             DBUtils_Demog.InsertPatient(conn, txt_firstname.getText(), txt_lastname.getText(),
-                    txt_homephone.getText(), txt_ssn.getText());
+                txt_homephone.getText(), txt_ssn.getText());
             //maybe add a confirmation swing popup here
-            
-            //retrieve all after inserting 
+
+            //retrieve all after inserting
             ResultSet rs = DBUtils_Demog.GetAllPatients(conn);
 
             DefaultTableModel tbl = new DefaultTableModel();
@@ -710,7 +710,7 @@ public class Demographics extends javax.swing.JFrame {
         catch(Exception e)
         {
             System.out.println(e.getMessage() );
-        } 
+        }
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
@@ -720,7 +720,7 @@ public class Demographics extends javax.swing.JFrame {
             int pid = GlobalData.patientID;
             DBUtils_Demog.DeletePatient(conn, pid);
             System.out.println("Delete button clicked for patient ID: " + pid);
-            
+
             //retrieve all after deletion
             ResultSet rs = DBUtils_Demog.GetAllPatients(conn);
             DefaultTableModel tbl = new DefaultTableModel();
@@ -733,9 +733,9 @@ public class Demographics extends javax.swing.JFrame {
             }
             tbl_demographics.setModel(tbl);
             //clear text fields
-            for (java.awt.Component comp : getContentPane().getComponents()) 
+            for (java.awt.Component comp : getContentPane().getComponents())
             {
-                if (comp instanceof JTextField) 
+                if (comp instanceof JTextField)
                 {
                     ((JTextField) comp).setText("");
                 }
@@ -745,7 +745,7 @@ public class Demographics extends javax.swing.JFrame {
         catch(Exception e)
         {
             System.out.println(e.getMessage() );
-        } 
+        }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     /**

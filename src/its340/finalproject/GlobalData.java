@@ -4,6 +4,9 @@ import java.sql.*;
 public class GlobalData 
 {
     public static int patientID;
+    public static String patientName;
+    
+    public static Decision AnimalTreeQSet;
     
     public static Connection ConnectToDB(String username, String password)
     {

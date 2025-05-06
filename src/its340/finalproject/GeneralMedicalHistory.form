@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -86,12 +89,12 @@
                                   <Component id="txt_tobaccoquantity" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel7" min="-2" pref="94" max="-2" attributes="0"/>
-                                  <Component id="lbl_gmhid" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
-                                  <Component id="lbl_patientname" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
-                                  <Component id="lbl_patientid" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="lbl_patientname" alignment="0" pref="224" max="32767" attributes="0"/>
+                                  <Component id="lbl_patientid" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lbl_gmhid" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -403,11 +406,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="SAVE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_saveActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_new">
           <Properties>
             <Property name="text" type="java.lang.String" value="NEW"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_newActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_edit">
           <Properties>
@@ -418,6 +427,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Demographics"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_toDEMActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_toSOB">
           <Properties>
@@ -433,6 +445,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="DELETE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_deleteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_interview">
           <Properties>

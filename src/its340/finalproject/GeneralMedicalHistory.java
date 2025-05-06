@@ -59,6 +59,11 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         btn_retrievall = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -122,18 +127,38 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         btn_unlock.setText("UNLOCK FORM");
 
         btn_save.setText("SAVE");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         btn_new.setText("NEW");
+        btn_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_newActionPerformed(evt);
+            }
+        });
 
         btn_edit.setText("EDIT");
 
         btn_toDEM.setText("Demographics");
+        btn_toDEM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_toDEMActionPerformed(evt);
+            }
+        });
 
         btn_toSOB.setText("Shortness of Breath");
 
         btn_toAT.setText("Activities Tolerance");
 
         btn_delete.setText("DELETE");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
 
         btn_interview.setText("START INTERVIEW");
 
@@ -269,11 +294,11 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                                     .addComponent(txt_tobacco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_tobaccoquantity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbl_gmhid, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbl_patientname, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbl_patientid, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbl_patientname, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(lbl_patientid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_gmhid, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 24, Short.MAX_VALUE)
@@ -359,11 +384,16 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    int gmhid;
+    
     private void btn_retrievallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_retrievallActionPerformed
         try
         {
-            int pid = 1;
+            int pid = GlobalData.patientID;
+            lbl_patientname.setText("Current Patient: " + GlobalData.patientName);
+            lbl_patientid.setText("Patient ID: " + GlobalData.patientID);
+            
             Connection conn = GlobalData.ConnectToDB("root", "password");
             ResultSet rs = DBUtils_GMH.GetGMHRecordsFromPID(conn, pid);
 
@@ -388,20 +418,30 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         {
             String gmhidStr = list_gmh.getSelectedValue();
             String numberOnly = gmhidStr.replaceAll("[^0-9]", ""); //format for int
-            int gmhidInt = Integer.parseInt(numberOnly);
-            lbl_gmhid.setText("GMH ID: " + gmhidInt);
+            gmhid = Integer.parseInt(numberOnly);
+            lbl_gmhid.setText("GMH ID: " + gmhid);
             System.out.println("DEBUG: Clicked Record ID: " + gmhidStr);
 
             try
             {
                 Connection conn = GlobalData.ConnectToDB("root", "password");
-                ResultSet rs = DBUtils_Demog.GetPatient_FromID(conn, gmhidInt);
+                ResultSet rs = DBUtils_GMH.GetGMHRecord_FromGMHID(conn, gmhid);
 
                 //fill textfields
                 if (rs.next())
                 {
                     //txt_box.setText(rs.getString(sqlColumnName));
-
+                    txt_tobacco.setText(rs.getString("Tobacco"));
+                    txt_tobaccoquantity.setText(rs.getString("TobaccoQuantity"));
+                    txt_tobaccoduration.setText(rs.getString("TobaccoDuration"));
+                    txt_alcohol.setText(rs.getString("Alcohol"));
+                    txt_alcoholduration.setText(rs.getString("AlcoholQuantity"));
+                    txt_alcoholduration.setText(rs.getString("AlcoholDuration"));
+                    txt_drug.setText(rs.getString("Drug"));
+                    txt_drugtype.setText(rs.getString("DrugType"));
+                    txt_drugduration.setText(rs.getString("DrugDuration"));
+                    txt_bloodtype.setText(rs.getString("BloodType"));
+                    txt_rhfactor.setText(rs.getString("Rh"));
                 }
                 conn.close();
             }
@@ -411,6 +451,116 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_list_gmhMouseClicked
+
+    private void btn_toDEMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_toDEMActionPerformed
+        Demographics demFrame = new Demographics(); 
+        demFrame.setVisible(true); 
+        this.dispose(); 
+    }//GEN-LAST:event_btn_toDEMActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try
+        {
+            int pid = GlobalData.patientID;
+            lbl_patientname.setText("Current Patient: " + GlobalData.patientName);
+            lbl_patientid.setText("Patient ID: " + GlobalData.patientID);
+            
+            Connection conn = GlobalData.ConnectToDB("root", "password");
+            ResultSet rs = DBUtils_GMH.GetGMHRecordsFromPID(conn, pid);
+
+            DefaultListModel lst = new DefaultListModel();
+            while(rs.next() )
+            {
+                String listData = "RECORD NUMBER: " + rs.getString(1);
+                lst.addElement(listData);
+            }
+            list_gmh.setModel(lst);
+            conn.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage() );
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+        try
+        {
+            int pid = GlobalData.patientID;
+            
+            Connection conn = GlobalData.ConnectToDB("root", "password");
+            DBUtils_GMH.InsertGMHRecord(conn, pid, txt_tobacco.getText(), txt_alcohol.getText(),
+                txt_drug.getText(), txt_bloodtype.getText(), txt_rhfactor.getText());
+            //maybe add a confirmation swing popup here
+
+            //retrieve all after inserting
+            ResultSet rs = DBUtils_GMH.GetGMHRecordsFromPID(conn, pid);
+
+            DefaultListModel lst = new DefaultListModel();
+            while(rs.next() )
+            {
+                String listData = "RECORD NUMBER: " + rs.getString(1);
+                lst.addElement(listData);
+            }
+            list_gmh.setModel(lst);
+            conn.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage() );
+        }
+    }//GEN-LAST:event_btn_newActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+       try
+        {
+            Connection conn = GlobalData.ConnectToDB("root", "password");
+            
+            DBUtils_GMH.UpdateGMHRecord(conn, gmhid, txt_tobacco.getText(), txt_tobaccoquantity.getText(),
+            txt_tobaccoduration.getText(), txt_alcohol.getText(), txt_alcoholquantity.getText(),
+            txt_alcoholduration.getText(), txt_drug.getText(), txt_drugtype.getText(), txt_drugduration.getText(),
+            txt_bloodtype.getText(), txt_rhfactor.getText());
+
+            conn.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage() );
+        }
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        try
+        {
+            Connection conn = GlobalData.ConnectToDB("root", "password");
+            int pid = GlobalData.patientID;
+            DBUtils_GMH.DeleteGMHRecord(conn, gmhid);
+            
+            //retrieve all after deletion
+            ResultSet rs = DBUtils_GMH.GetGMHRecordsFromPID(conn, pid);
+            DefaultListModel lst = new DefaultListModel();
+            while(rs.next() )
+            {
+                String listData = "RECORD NUMBER: " + rs.getString(1);
+                lst.addElement(listData);
+            }
+            list_gmh.setModel(lst);
+            
+            //clear text fields
+            for (java.awt.Component comp : getContentPane().getComponents())
+            {
+                if (comp instanceof JTextField)
+                {
+                    ((JTextField) comp).setText("");
+                }
+            }
+            conn.close();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     /**
      * @param args the command line arguments

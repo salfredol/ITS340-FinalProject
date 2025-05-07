@@ -6,6 +6,11 @@ public class GlobalData
     public static int patientID;
     public static String patientName;
     
+    public static String BloodTypeResult = "";
+    public static String AlcoholUseResult = "";
+    public static String DrugUseResult = "";
+    public static String TobaccoUseResult = "";
+    
     public static Decision BloodTypeQSet;
     public static Decision TobaccoQSet;
     public static Decision AlcoholQSet;

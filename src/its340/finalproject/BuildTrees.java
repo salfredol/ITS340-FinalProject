@@ -14,8 +14,8 @@ public class BuildTrees
     public static Decision BuildBloodTypeQSet()
     {
         Decision bloodTree = new Decision();
-        bloodTree.createRoot(1, "You are about to be interviewed for your general medical history. "
-                + "Is that ok?"); 
+        bloodTree.createRoot(1, "You are about to be interviewed for your general medical history, "
+                + " starting with questions about your blood. Is that ok?"); 
         
         //treeName.nodeType.(attach ID, node ID, "question");
         bloodTree.insertYesNode(1, 2, "Do you know your blood type?"); 
@@ -29,29 +29,26 @@ public class BuildTrees
         bloodTree.insertYesNode(4, 6, "Is your blood type O+?");
         bloodTree.insertNoNode(4, 9, "Is your blood type A?");
         
-        bloodTree.insertYesNode(6, 7, "Your blood type has been recorded as O+.");
-        bloodTree.insertNoNode(6, 8, "Your blood type has been recorded as O-.");
+        bloodTree.insertYesNode(6, 7, "Recorded values: blood type O, Rh factor +");
+        bloodTree.insertNoNode(6, 8, "Recorded values: blood type O, Rh factor -");
         //DEAD END; go to next interview
         
-        bloodTree.insertYesNode(9, 10, "Is your blood type A?");
+        bloodTree.insertYesNode(9, 10, "Is your blood type A+?");
         bloodTree.insertNoNode(9, 11, "Is your blood type B?");
         
-        bloodTree.insertYesNode(10, 12, "Is your blood type A+?");
-        bloodTree.insertNoNode(10, 13, "Is your blood type B?");
-        
-        bloodTree.insertYesNode(12, 14, "Your blood type has been recorded as A+.");
-        bloodTree.insertNoNode(12, 15, "Your blood type has been recorded as A-");
+        bloodTree.insertYesNode(10, 14, "Recorded values: blood type A, Rh factor +");
+        bloodTree.insertNoNode(10, 15, "Recorded values: blood type A, Rh factor -");
         //DEAD END; go to next interview
         
-        bloodTree.insertYesNode(13, 16, "Is your blood type B+?");
-        bloodTree.insertNoNode(13, 19, "Is your blood type AB+?");
+        bloodTree.insertYesNode(11, 16, "Is your blood type B+?");
+        bloodTree.insertNoNode(11, 19, "Is your blood type AB+?");
 
-        bloodTree.insertYesNode(16, 17, "Your blood type has been recorded as B+.");
-        bloodTree.insertNoNode(16, 18, "Your blood type has been recorded as B-.");
+        bloodTree.insertYesNode(16, 17, "Recorded values: blood type B, Rh factor +");
+        bloodTree.insertNoNode(16, 18, "Recorded values: blood type B, Rh factor -");
         //DEAD END; go to next interview
 
-        bloodTree.insertYesNode(19, 20, "Your blood type has been recorded as AB+.");
-        bloodTree.insertNoNode(19, 21, "Your blood type has been recorded as AB-.");
+        bloodTree.insertYesNode(19, 20, "Recorded values: blood type AB, Rh factor +");
+        bloodTree.insertNoNode(19, 21, "Recorded values: blood type AB, Rh factor -");
         //DEAD END; go to next interview
 
         return bloodTree;
@@ -62,18 +59,21 @@ public class BuildTrees
         tobaccoTree.createRoot(1, "Do you regularly use tobacco?"); 
         
         tobaccoTree.insertYesNode(1, 2, "Do you use more than 5 tobacco products per day?");
-        tobaccoTree.insertNoNode(1, 3, "You have been recorded as a non-user of tobacco.");
-        // DEAD END
+        tobaccoTree.insertNoNode(1, 3, "Recorded: N");
+        //DEAD END
 
         tobaccoTree.insertYesNode(2, 4, "Have you used tobacco for more than 1 year?");
-        tobaccoTree.insertNoNode(2, 5, "You have been recorded as a light tobacco user.");
-        // DEAD END
-
-        tobaccoTree.insertYesNode(4, 6, "You have been recorded as a heavy, long-term tobacco user.");
-        tobaccoTree.insertNoNode(4, 7, "You have been recorded as a heavy, recent tobacco user.");
-        // DEAD END
+        tobaccoTree.insertNoNode(2, 5, "Have you used tobacco for more than 1 year?");
         
-        return tobaccoTree = new Decision();
+        tobaccoTree.insertYesNode(5, 8, "Recorded: Light, Long term, Y");
+        tobaccoTree.insertNoNode(5, 9, "Recorded: Light, Short term, Y");
+        //DEAD END
+
+        tobaccoTree.insertYesNode(4, 6, "Recorded: Heavy, Long term, Y");
+        tobaccoTree.insertNoNode(4, 7, "Recorded: Heavy, Short term, Y");
+        //DEAD END
+        
+        return tobaccoTree;
     }
     public static Decision BuildAlcoholQSet()
     {
@@ -81,16 +81,16 @@ public class BuildTrees
         alcoholTree.createRoot(1, "Do you regularly consume alcohol?");
 
         alcoholTree.insertYesNode(1, 2, "Do you drink more than 3 times per week?");
-        alcoholTree.insertNoNode(1, 3, "You have been recorded as a non-user of alcohol.");
-        //DEAD END
+        alcoholTree.insertNoNode(1, 3, "Recorded: N");
+        // DEAD END
 
         alcoholTree.insertYesNode(2, 4, "Have you been drinking regularly for more than 1 year?");
-        alcoholTree.insertNoNode(2, 5, "You have been recorded as a moderate drinker.");
-        //DEAD END
+        alcoholTree.insertNoNode(2, 5, "Recorded: Moderate, Short term, Y");
+        // DEAD END
 
-        alcoholTree.insertYesNode(4, 6, "You have been recorded as a heavy, long-term alcohol user.");
-        alcoholTree.insertNoNode(4, 7, "You have been recorded as a heavy, recent alcohol user.");
-        //DEAD END
+        alcoholTree.insertYesNode(4, 6, "Recorded: Heavy, Long term, Y");
+        alcoholTree.insertNoNode(4, 7, "Recorded: Heavy, Short term, Y");
+        // DEAD END
 
         return alcoholTree;
     }
@@ -100,33 +100,39 @@ public class BuildTrees
         drugTree.createRoot(1, "Do you currently use any recreational drugs?");
 
         drugTree.insertYesNode(1, 2, "Do you use cannabis?");
-        drugTree.insertNoNode(1, 10, "You have been recorded as a non-user of recreational drugs.");
+        drugTree.insertNoNode(1, 20, "Recorded: N");
         //DEAD END
 
         //Cannabis path
-        drugTree.insertYesNode(2, 3, "Cannabis use recorded. Do you use stimulants (e.g., cocaine, amphetamines)?");
-        drugTree.insertNoNode(2, 4, "Do you use stimulants (e.g., cocaine, amphetamines)?");
+        drugTree.insertYesNode(2, 3, "Do you use stimulants (e.g., cocaine, amphetamines)?");
+        drugTree.insertNoNode(2, 10, "Do you use for more than 1 year? (Cannabis)");
 
         //Stimulant path
-        drugTree.insertYesNode(3, 5, "Stimulant use recorded. Do you use depressants (e.g., benzodiazepines)?");
-        drugTree.insertNoNode(3, 6, "Do you use depressants (e.g., benzodiazepines)?");
+        drugTree.insertYesNode(3, 4, "Do you use depressants (e.g., benzodiazepines)?");
+        drugTree.insertNoNode(3, 11, "Do you use for more than 1 year? (Cannabis, Stimulants)");
 
-        drugTree.insertYesNode(4, 5, "Stimulant use recorded. Do you use depressants (e.g., benzodiazepines)?");
-        drugTree.insertNoNode(4, 6, "Do you use depressants (e.g., benzodiazepines)?");
-
-        //Depressant path
-        drugTree.insertYesNode(5, 7, "Depressant use recorded. Do you use hallucinogens (e.g., LSD, psilocybin)?");
-        drugTree.insertNoNode(5, 8, "Do you use hallucinogens (e.g., LSD, psilocybin)?");
-
-        drugTree.insertYesNode(6, 7, "Depressant use recorded. Do you use hallucinogens (e.g., LSD, psilocybin)?");
-        drugTree.insertNoNode(6, 8, "Do you use hallucinogens (e.g., LSD, psilocybin)?");
+        drugTree.insertYesNode(4, 5, "Do you use hallucinogens (e.g., LSD, psilocybin)?");
+        drugTree.insertNoNode(4, 12, "Do you use for more than 1 year? (Cannabis, Stimulants, Depressants)");
 
         //Hallucinogen path
-        drugTree.insertYesNode(7, 9, "Hallucinogen use recorded. Thank you for providing this information.");
-        drugTree.insertNoNode(7, 9, "Thank you for providing this information.");
-        drugTree.insertYesNode(8, 9, "Hallucinogen use recorded. Thank you for providing this information.");
-        drugTree.insertNoNode(8, 9, "Thank you for providing this information.");
-        
-        return drugTree = new Decision();
+        drugTree.insertYesNode(5, 13, "Do you use for more than 1 year? (Cannabis, Stimulants, Depressants, Hallucinogens)");
+        drugTree.insertNoNode(5, 14, "Do you use for more than 1 year? (Cannabis, Stimulants, Depressants, Hallucinogens)");
+
+        drugTree.insertNoNode(10, 15, "Recorded: Cannabis, Short term, Y");
+        drugTree.insertYesNode(10, 16, "Recorded: Cannabis, Long term, Y");
+
+        drugTree.insertNoNode(11, 17, "Recorded: Cannabis, Stimulants, Short term, Y");
+        drugTree.insertYesNode(11, 18, "Recorded: Cannabis, Stimulants, Long term, Y");
+
+        drugTree.insertNoNode(12, 19, "Recorded: Cannabis, Stimulants, Depressants, Short term, Y");
+        drugTree.insertYesNode(12, 21, "Recorded: Cannabis, Stimulants, Depressants, Long term, Y");
+
+        drugTree.insertNoNode(13, 22, "Recorded: Cannabis, Stimulants, Depressants, Hallucinogens, Short term, Y");
+        drugTree.insertYesNode(13, 23, "Recorded: Cannabis, Stimulants, Depressants, Hallucinogens, Long term, Y");
+
+        drugTree.insertNoNode(14, 22, "Recorded: Cannabis, Stimulants, Depressants, Hallucinogens, Short term, Y");
+        drugTree.insertYesNode(14, 23, "Recorded: Cannabis, Stimulants, Depressants, Hallucinogens, Long term, Y");
+
+        return drugTree;
     }
 }

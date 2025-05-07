@@ -1,118 +1,110 @@
 package its340.finalproject;
-import java.util.Scanner;
+
+import javax.swing.*;
 import java.util.Stack;
 
-public class Decision 
-{
+public class Decision {
     private Node root;
-    Scanner sc = new Scanner(System.in);
-    
-    public Decision()
-    {
+    public Decision() {
         this.root = null;
     }
-    
-    public Node getRoot()
-    {
+
+    public Node getRoot() {
         return root;
     }
-    
-    public void createRoot(int newRootNodeID, String question)
-    {
+
+    public void createRoot(int newRootNodeID, String question) {
         root = new Node(newRootNodeID, question);
     }
-    
-    public void insertYesNode(int existingNodeID, int newNodeID, String question)
-    {
+
+    public void insertYesNode(int existingNodeID, int newNodeID, String question) {
         Node newNode = new Node(newNodeID, question);
-        Stack bTreeStack = new Stack(); //OR Stack<Node> bTreeStack = new Stack();
+        Stack<Node> bTreeStack = new Stack<>();
         bTreeStack.push(root);
-        while(!bTreeStack.isEmpty() )
-        {
-            Node next = (Node)bTreeStack.pop();
-            if(existingNodeID == next.nodeID)
-            {
-                if(next.yesBranch == null)
-                {
+        while (!bTreeStack.isEmpty()) {
+            Node next = bTreeStack.pop();
+            if (existingNodeID == next.nodeID) {
+                if (next.yesBranch == null) {
                     next.yesBranch = newNode;
                     return;
                 }
             }
-            if (next.yesBranch != null)
-            {
+            if (next.yesBranch != null) {
                 bTreeStack.push(next.yesBranch);
             }
-            if (next.noBranch != null)
-            {
+            if (next.noBranch != null) {
                 bTreeStack.push(next.noBranch);
             }
         }
     }
-    public void insertNoNode(int existingNodeID, int newNodeID, String question)
-    {
+
+    public void insertNoNode(int existingNodeID, int newNodeID, String question) {
         Node newNode = new Node(newNodeID, question);
-        Stack bTreeStack = new Stack(); 
+        Stack<Node> bTreeStack = new Stack<>();
         bTreeStack.push(root);
-        while(!bTreeStack.isEmpty() )
-        {
-            Node next = (Node)bTreeStack.pop();
-            if(existingNodeID == next.nodeID)
-            {
-                if(next.noBranch == null)
-                {
+        while (!bTreeStack.isEmpty()) {
+            Node next = bTreeStack.pop();
+            if (existingNodeID == next.nodeID) {
+                if (next.noBranch == null) {
                     next.noBranch = newNode;
                     return;
                 }
             }
-            if (next.noBranch != null)
-            {
-                if (next.yesBranch != null)
-                {
-                    bTreeStack.push(next.yesBranch);
-                }
+            if (next.yesBranch != null) {
+                bTreeStack.push(next.yesBranch);
             }
-            if (next.yesBranch != null)
-            {
-                if (next.noBranch != null)
-                {
-                    bTreeStack.push(next.noBranch);
-                }
+            if (next.noBranch != null) {
+                bTreeStack.push(next.noBranch);
             }
         }
     }
-    public void queryTree(Node currentNode)
+
+    public void queryTree(Node currentNode, String context) 
     {
-        //check if question is final question
-        if(currentNode.yesBranch == null && currentNode.noBranch == null)
+        if(currentNode.yesBranch == null && currentNode.noBranch == null) 
         {
-            System.out.print(currentNode.question);
+            JOptionPane.showMessageDialog(null, currentNode.question);
+
+            switch (context) 
+            {
+                case "blood":
+                    GlobalData.BloodTypeResult = currentNode.question;
+                    break;
+                case "alcohol":
+                    GlobalData.AlcoholUseResult = currentNode.question;
+                    break;
+                case "drug":
+                    GlobalData.DrugUseResult = currentNode.question;
+                    break;
+                case "tobacco":
+                    GlobalData.TobaccoUseResult = currentNode.question;
+                    break;
+            }
             return;
         }
-        askQuestion(currentNode);
+        askQuestion(currentNode, context);
     }
-    public void askQuestion(Node currentNode)
+
+
+
+    public void askQuestion(Node currentNode, String context) 
     {
-        System.out.print(currentNode.question + "Enter Y/N: ");
-        String answer = sc.nextLine().toLowerCase();
-        //DBUtils.writeToDB(currentNode.nodeID, answer);
-        if(answer.equals("y"))
+        int response = JOptionPane.showConfirmDialog(null, currentNode.question, 
+                "Interview", JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) 
         {
-            if(currentNode.yesBranch != null)
+            if (currentNode.yesBranch != null) 
             {
-                queryTree(currentNode.yesBranch);
+                queryTree(currentNode.yesBranch, context);
             }
-        }
-        else if(answer.equals("n"))
+        } 
+        else if (response == JOptionPane.NO_OPTION) 
         {
-            if(currentNode.noBranch != null)
+            if (currentNode.noBranch != null) 
             {
-                queryTree(currentNode.noBranch);
+                queryTree(currentNode.noBranch, context);
             }
-        }
-        else
-        {
-            System.out.println("Bad input. Must answer with Y or N.");
-            askQuestion(currentNode);
         }
     }
 }

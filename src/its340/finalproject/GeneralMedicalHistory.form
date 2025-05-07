@@ -456,6 +456,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="START INTERVIEW"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_interviewActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

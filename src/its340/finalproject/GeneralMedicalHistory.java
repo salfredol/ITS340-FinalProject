@@ -3,6 +3,7 @@ import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultListModel;
 import javax.swing.*;
+import java.util.StringJoiner;
 
 public class GeneralMedicalHistory extends javax.swing.JFrame 
 {    
@@ -151,6 +152,11 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         });
 
         btn_interview.setText("START INTERVIEW");
+        btn_interview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_interviewActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -557,6 +563,127 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_interviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_interviewActionPerformed
+        BuildTrees.BuildAllInterviewQuestionSets();
+        
+        //BLOOD
+        Decision bloodTree = GlobalData.BloodTypeQSet;
+        bloodTree.queryTree(bloodTree.getRoot(), "blood");
+
+        if (!GlobalData.BloodTypeResult.isEmpty()) 
+        {
+            // e.g. "recorded values: blood type A, rh factor +"
+            String[] parts = GlobalData.BloodTypeResult.split(":")[1].trim().split(",");
+            String bloodType = parts[0].replace("blood type", "").trim();  // "A"
+            String rhFactor = parts[1].replace("Rh factor", "").trim();    // "+"
+
+            txt_bloodtype.setText(bloodType);
+            txt_rhfactor.setText(rhFactor);
+        }
+        
+        //TOBACCO
+        Decision tobaccoTree = GlobalData.TobaccoQSet;
+        tobaccoTree.queryTree(tobaccoTree.getRoot(), "tobacco");
+
+        if (!GlobalData.TobaccoUseResult.isEmpty()) 
+        {
+            String result = GlobalData.TobaccoUseResult;
+
+            if (result.equals("Recorded: N")) 
+            {
+                txt_tobacco.setText("N");
+                txt_tobaccoquantity.setText("");
+                txt_tobaccoduration.setText("");
+            } 
+            else if (result.startsWith("Recorded:")) 
+            {
+                //"Recorded: Light, Long term, Y"
+                String[] parts = result.split(":")[1].trim().split(",");
+
+                if (parts.length == 3) 
+                {
+                    String quantity = parts[0].trim();      // Light or Heavy
+                    String duration = parts[1].trim();      // Long term or Short term
+                    String usage = parts[2].trim();         // Y
+
+                    txt_tobacco.setText(usage);
+                    txt_tobaccoquantity.setText(quantity);
+                    txt_tobaccoduration.setText(duration);
+                }
+            }
+        }
+        
+        //ALCOHOL
+        Decision alcoholTree = GlobalData.AlcoholQSet;
+        alcoholTree.queryTree(alcoholTree.getRoot(), "alcohol");
+
+        if (!GlobalData.AlcoholUseResult.isEmpty()) 
+        {
+            String result = GlobalData.AlcoholUseResult;
+
+            if (result.equals("Recorded: N")) 
+            {
+                txt_alcohol.setText("N");
+                txt_alcoholquantity.setText("");
+                txt_alcoholduration.setText("");
+            } 
+            else if (result.startsWith("Recorded:")) 
+            {
+                //"Recorded: Heavy, Long term, Y"
+                String[] parts = result.split(":")[1].trim().split(",");
+
+                if (parts.length == 3) 
+                {
+                    String quantity = parts[0].trim();    // Moderate or Heavy
+                    String duration = parts[1].trim();    // Long term or Short term
+                    String usage = parts[2].trim();       // Y
+
+                    txt_alcohol.setText(usage);
+                    txt_alcoholquantity.setText(quantity);
+                    txt_alcoholduration.setText(duration);
+                }
+            }
+        }
+        
+        //DRUG
+        GlobalData.DrugUseResult = "";
+        Decision drugTree = GlobalData.DrugQSet;
+        drugTree.queryTree(drugTree.getRoot(), "drug");
+
+        String msg = GlobalData.DrugUseResult;
+        if (msg.startsWith("Recorded: ")) 
+        {
+            String recorded = msg.substring(10).trim(); // after "Recorded: "
+
+            if (recorded.equals("N")) 
+            {
+                txt_drug.setText("N");
+                txt_drugtype.setText("");
+                txt_drugduration.setText("");
+            } 
+            else 
+            {
+                txt_drug.setText("Y");
+
+                // split into parts: type list, duration, Y
+                String[] parts = recorded.split(", ");
+                if (parts.length >= 3) 
+                {
+                    // drug types = everything except last 2 items
+                    StringJoiner joiner = new StringJoiner(", ");
+                    for (int i = 0; i < parts.length - 2; i++) 
+                    {
+                        joiner.add(parts[i]);
+                    }
+                    txt_drugtype.setText(joiner.toString());
+                    txt_drugduration.setText(parts[parts.length - 2]);
+                }
+            }
+        }
+
+        
+    }//GEN-LAST:event_btn_interviewActionPerformed
 
     /**
      * @param args the command line arguments

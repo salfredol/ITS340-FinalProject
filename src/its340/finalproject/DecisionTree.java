@@ -7,6 +7,6 @@ public class DecisionTree
         //myAnimalTree.queryTree(myAnimalTree.getRoot() );
         
         BuildTrees.BuildAllInterviewQuestionSets();
-        GlobalData.AnimalTreeQSet.queryTree(GlobalData.AnimalTreeQSet.getRoot());
+        GlobalData.BloodTypeQSet.queryTree(GlobalData.BloodTypeQSet.getRoot());
     }
 }

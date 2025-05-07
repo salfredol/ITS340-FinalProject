@@ -6,7 +6,10 @@ public class GlobalData
     public static int patientID;
     public static String patientName;
     
-    public static Decision AnimalTreeQSet;
+    public static Decision BloodTypeQSet;
+    public static Decision TobaccoQSet;
+    public static Decision AlcoholQSet;
+    public static Decision DrugQSet;
     
     public static Connection ConnectToDB(String username, String password)
     {

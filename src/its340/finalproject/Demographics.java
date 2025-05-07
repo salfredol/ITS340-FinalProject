@@ -5,7 +5,9 @@ import javax.swing.*;
 
 public class Demographics extends javax.swing.JFrame {
 
-    public Demographics() {
+    public Demographics() 
+    {
+        DBUtils_General.toggleFormMode(this, false);
         initComponents();
     }
 
@@ -73,11 +75,9 @@ public class Demographics extends javax.swing.JFrame {
         btn_toSOB = new javax.swing.JButton();
         btn_toAT = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
-        btn_edit = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
-        btn_unlock = new javax.swing.JButton();
-        btn_lock = new javax.swing.JButton();
+        btn_formlock = new javax.swing.JButton();
         btn_interview = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -285,8 +285,6 @@ public class Demographics extends javax.swing.JFrame {
             }
         });
 
-        btn_edit.setText("EDIT RECORD");
-
         btn_delete.setText("DELETE ");
         btn_delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,9 +299,13 @@ public class Demographics extends javax.swing.JFrame {
             }
         });
 
-        btn_unlock.setText("UNLOCK FORM");
-
-        btn_lock.setText("LOCK FORM");
+        btn_formlock.setText("EDIT MODE");
+        btn_formlock.setName("btn_formlock"); // NOI18N
+        btn_formlock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_formlockActionPerformed(evt);
+            }
+        });
 
         btn_interview.setText("START INTERVIEW");
         btn_interview.addActionListener(new java.awt.event.ActionListener() {
@@ -323,12 +325,10 @@ public class Demographics extends javax.swing.JFrame {
                     .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_new, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_edit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toGMH, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toAT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toSOB, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_unlock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_lock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_formlock, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -340,9 +340,7 @@ public class Demographics extends javax.swing.JFrame {
                 .addComponent(btn_toSOB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toGMH)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(btn_edit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addComponent(btn_new)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
@@ -351,10 +349,8 @@ public class Demographics extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(btn_interview)
                 .addGap(59, 59, 59)
-                .addComponent(btn_unlock)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_lock)
-                .addGap(18, 18, 18))
+                .addComponent(btn_formlock)
+                .addGap(51, 51, 51))
         );
 
         jLabel24.setText("NOTE: Creating a new record only applies required (*) fields. ");
@@ -771,6 +767,8 @@ public class Demographics extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_toGMHActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        DBUtils_General.toggleFormMode(getContentPane(), false);  // Start in view mode
+
         int pid = GlobalData.patientID;
         lbl_patientname.setText("Current Patient: " + GlobalData.patientName);
         lbl_patientid.setText("Patient ID: " + GlobalData.patientID);
@@ -846,6 +844,7 @@ public class Demographics extends javax.swing.JFrame {
             txt_marital.getText(), txt_gender.getText(), txt_home.getText(), txt_city.getText(), txt_province.getText(), txt_zip.getText(),
             txt_country.getText(), txt_citizenship.getText(), txt_ethnicity.getText(), txt_nextofkin.getText(), 
             txt_nokrelation.getText(), txt_comments.getText());
+            
 
             conn.close();
         }
@@ -853,7 +852,13 @@ public class Demographics extends javax.swing.JFrame {
         {
             System.out.println(e.getMessage() );
         }
+        //DBUtils_General.toggleFormMode(this, false); 
     }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_formlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_formlockActionPerformed
+        boolean editMode = btn_formlock.getText().equals("VIEW MODE");
+        DBUtils_General.toggleFormMode(getContentPane(), editMode);
+    }//GEN-LAST:event_btn_formlockActionPerformed
 
     /**
      * @param args the command line arguments
@@ -892,17 +897,15 @@ public class Demographics extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_delete;
-    private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_formlock;
     private javax.swing.JButton btn_interview;
     private javax.swing.JButton btn_lastsearch;
-    private javax.swing.JButton btn_lock;
     private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_retrieveall;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_toAT;
     private javax.swing.JButton btn_toGMH;
     private javax.swing.JButton btn_toSOB;
-    private javax.swing.JButton btn_unlock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

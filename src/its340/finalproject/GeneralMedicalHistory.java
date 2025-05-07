@@ -8,7 +8,9 @@ import java.util.StringJoiner;
 public class GeneralMedicalHistory extends javax.swing.JFrame 
 {    
 
-    public GeneralMedicalHistory() {
+    public GeneralMedicalHistory() 
+    {
+        DBUtils_General.toggleFormMode(this, false);
         initComponents();
     }
 
@@ -39,12 +41,10 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         jLabel4 = new javax.swing.JLabel();
         txt_tobaccoduration = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        btn_lock = new javax.swing.JButton();
-        btn_unlock = new javax.swing.JButton();
+        panel_nav = new javax.swing.JPanel();
+        btn_formlock = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
-        btn_edit = new javax.swing.JButton();
         btn_toDEM = new javax.swing.JButton();
         btn_toSOB = new javax.swing.JButton();
         btn_toAT = new javax.swing.JButton();
@@ -111,11 +111,15 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         jLabel23.setFont(new java.awt.Font("Bahnschrift", 0, 48)); // NOI18N
         jLabel23.setText("GENERAL MEDICAL HISTORY");
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
+        panel_nav.setBackground(new java.awt.Color(0, 51, 102));
 
-        btn_lock.setText("LOCK FORM");
-
-        btn_unlock.setText("UNLOCK FORM");
+        btn_formlock.setText("EDIT MODE");
+        btn_formlock.setName("btn_formlock"); // NOI18N
+        btn_formlock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_formlockActionPerformed(evt);
+            }
+        });
 
         btn_save.setText("SAVE");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
@@ -130,8 +134,6 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                 btn_newActionPerformed(evt);
             }
         });
-
-        btn_edit.setText("EDIT");
 
         btn_toDEM.setText("Demographics");
         btn_toDEM.addActionListener(new java.awt.event.ActionListener() {
@@ -158,37 +160,33 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panel_navLayout = new javax.swing.GroupLayout(panel_nav);
+        panel_nav.setLayout(panel_navLayout);
+        panel_navLayout.setHorizontalGroup(
+            panel_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_navLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panel_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toSOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_toDEM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_save, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_unlock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_lock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_formlock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_interview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        panel_navLayout.setVerticalGroup(
+            panel_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_navLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_toAT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toSOB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_toDEM)
-                .addGap(39, 39, 39)
-                .addComponent(btn_edit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(72, 72, 72)
                 .addComponent(btn_new)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
@@ -197,10 +195,8 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                 .addGap(46, 46, 46)
                 .addComponent(btn_interview)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(btn_unlock)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_lock)
-                .addGap(17, 17, 17))
+                .addComponent(btn_formlock)
+                .addGap(50, 50, 50))
         );
 
         lbl_patientname.setText("Current Patient:");
@@ -242,7 +238,7 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panel_nav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -318,7 +314,7 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                                 .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(panel_nav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbl_patientname, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -458,9 +454,12 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         Demographics demFrame = new Demographics(); 
         demFrame.setVisible(true); 
         this.dispose(); 
+        
     }//GEN-LAST:event_btn_toDEMActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        DBUtils_General.toggleFormMode(getContentPane(), false);  // Start in view mode
+
         try
         {
             int pid = GlobalData.patientID;
@@ -486,6 +485,7 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowOpened
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+        
         try
         {
             int pid = GlobalData.patientID;
@@ -681,9 +681,14 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
                 }
             }
         }
-
-        
+        //WRITE TO LOG
+        DBUtils_General.writeInterviewLog(GlobalData.patientID, GlobalData.patientName);
     }//GEN-LAST:event_btn_interviewActionPerformed
+
+    private void btn_formlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_formlockActionPerformed
+        boolean editMode = btn_formlock.getText().equals("VIEW MODE");
+        DBUtils_General.toggleFormMode(getContentPane(), editMode);
+    }//GEN-LAST:event_btn_formlockActionPerformed
 
     /**
      * @param args the command line arguments
@@ -699,16 +704,14 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_delete;
-    private javax.swing.JButton btn_edit;
+    private javax.swing.JButton btn_formlock;
     private javax.swing.JButton btn_interview;
-    private javax.swing.JButton btn_lock;
     private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_retrievall;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_toAT;
     private javax.swing.JButton btn_toDEM;
     private javax.swing.JButton btn_toSOB;
-    private javax.swing.JButton btn_unlock;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
@@ -721,13 +724,13 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_gmhid;
     private javax.swing.JLabel lbl_patientid;
     private javax.swing.JLabel lbl_patientname;
     private javax.swing.JList<String> list_gmh;
+    private javax.swing.JPanel panel_nav;
     private javax.swing.JTextField txt_alcohol;
     private javax.swing.JTextField txt_alcoholduration;
     private javax.swing.JTextField txt_alcoholquantity;

@@ -30,7 +30,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="panel_nav" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -128,7 +128,7 @@
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="panel_nav" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -338,7 +338,7 @@
         <Property name="text" type="java.lang.String" value="GENERAL MEDICAL HISTORY"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="panel_nav">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="66" green="33" red="0" type="rgb"/>
@@ -357,9 +357,7 @@
                       <Component id="btn_toDEM" max="32767" attributes="0"/>
                       <Component id="btn_new" max="32767" attributes="0"/>
                       <Component id="btn_save" max="32767" attributes="0"/>
-                      <Component id="btn_unlock" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btn_lock" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btn_edit" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btn_formlock" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_interview" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="21" max="32767" attributes="0"/>
@@ -375,9 +373,7 @@
                   <Component id="btn_toSOB" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_toDEM" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                  <Component id="btn_edit" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   <Component id="btn_new" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_save" min="-2" max="-2" attributes="0"/>
@@ -386,24 +382,21 @@
                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   <Component id="btn_interview" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="64" max="32767" attributes="0"/>
-                  <Component id="btn_unlock" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_lock" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <Component id="btn_formlock" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btn_lock">
+        <Component class="javax.swing.JButton" name="btn_formlock">
           <Properties>
-            <Property name="text" type="java.lang.String" value="LOCK FORM"/>
+            <Property name="text" type="java.lang.String" value="EDIT MODE"/>
+            <Property name="name" type="java.lang.String" value="btn_formlock" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_unlock">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="UNLOCK FORM"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_formlockActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_save">
           <Properties>
@@ -420,11 +413,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_newActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_edit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="EDIT"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btn_toDEM">
           <Properties>

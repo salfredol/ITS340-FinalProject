@@ -43,15 +43,16 @@ public class DBUtils_Demog
     public static void UpdatePatient(Connection conn, int pid, 
             String fName, String lName, String prevLast, String mobPhone, String homePhone, 
             String emPhone, String email, String hcp, String ssn, String dob, 
-            String marital, String gender, String address, String city, String state, 
+            String gender, String marital, String address, String city, String state, 
             String zip, String country, String citizenship, String ethnicity, String nextOfKin, 
             String nokRelation, String comments)
     {
         try
         {
-            String qryStoredProc = "{CALL UpdatePatient(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}"
-                    + " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+            String qryStoredProc = "{CALL UpdatePatient(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, "
+                    + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
+
             cs.setInt(1, pid);
             cs.setString(2, fName);
             cs.setString(3, lName);
@@ -61,10 +62,10 @@ public class DBUtils_Demog
             cs.setString(7, emPhone);
             cs.setString(8, email);
             cs.setString(9, hcp);
-            cs.setString(10, ssn);
+            cs.setString(10, ssn); 
             cs.setString(11, dob);
-            cs.setString(12, marital);
-            cs.setString(13, gender);
+            cs.setString(12, gender);
+            cs.setString(13, marital);
             cs.setString(14, address);
             cs.setString(15, city);
             cs.setString(16, state);
@@ -75,12 +76,15 @@ public class DBUtils_Demog
             cs.setString(21, nextOfKin);
             cs.setString(22, nokRelation);
             cs.setString(23, comments);
+
+            cs.executeUpdate();
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage() );
+            System.out.println(e.getMessage());
         }
     }
+
     public static ResultSet GetPatient_LastName(Connection conn, String lname)
     {
         ResultSet rs = null;

@@ -695,12 +695,10 @@
                       <Component id="btn_delete" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_save" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_new" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btn_edit" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_toGMH" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_toAT" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_toSOB" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="btn_unlock" alignment="0" max="32767" attributes="0"/>
-                      <Component id="btn_lock" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btn_formlock" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
@@ -715,9 +713,7 @@
                   <Component id="btn_toSOB" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_toGMH" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
-                  <Component id="btn_edit" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="94" max="32767" attributes="0"/>
                   <Component id="btn_new" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btn_save" min="-2" max="-2" attributes="0"/>
@@ -726,10 +722,8 @@
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="btn_interview" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                  <Component id="btn_unlock" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btn_lock" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Component id="btn_formlock" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -761,11 +755,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_newActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_edit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="EDIT RECORD"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="btn_delete">
           <Properties>
             <Property name="text" type="java.lang.String" value="DELETE "/>
@@ -782,15 +771,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_saveActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btn_unlock">
+        <Component class="javax.swing.JButton" name="btn_formlock">
           <Properties>
-            <Property name="text" type="java.lang.String" value="UNLOCK FORM"/>
+            <Property name="text" type="java.lang.String" value="EDIT MODE"/>
+            <Property name="name" type="java.lang.String" value="btn_formlock" noResource="true"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_lock">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="LOCK FORM"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_formlockActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_interview">
           <Properties>

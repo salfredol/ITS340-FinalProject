@@ -1,0 +1,36 @@
+Patient Name: LastTest, TestFirst
+Patient ID: 1
+Date: 2025-05-07T16:54:16.567188600
+------------------------------------------------------------
+QUESTION: Is your blood type O+? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Is your blood type O? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you know your blood type? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: You are about to be interviewed for your general medical history,  starting with questions about your blood. Is that ok? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Have you used tobacco for more than 1 year? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use more than 5 tobacco products per day? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you regularly use tobacco? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Have you been drinking regularly for more than 1 year? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you drink more than 3 times per week? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you regularly consume alcohol? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use for more than 1 year? (Cannabis, Stimulants, Depressants, Hallucinogens) | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use hallucinogens (e.g., LSD, psilocybin)? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use depressants (e.g., benzodiazepines)? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use stimulants (e.g., cocaine, amphetamines)? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you use cannabis? | ANSWER: YES
+------------------------------------------------------------
+QUESTION: Do you currently use any recreational drugs? | ANSWER: YES
+------------------------------------------------------------

@@ -145,6 +145,11 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         btn_toSOB.setText("Shortness of Breath");
 
         btn_toAT.setText("Activities Tolerance");
+        btn_toAT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_toATActionPerformed(evt);
+            }
+        });
 
         btn_delete.setText("DELETE");
         btn_delete.addActionListener(new java.awt.event.ActionListener() {
@@ -453,8 +458,7 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
     private void btn_toDEMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_toDEMActionPerformed
         Demographics demFrame = new Demographics(); 
         demFrame.setVisible(true); 
-        this.dispose(); 
-        
+        this.dispose();
     }//GEN-LAST:event_btn_toDEMActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -689,6 +693,12 @@ public class GeneralMedicalHistory extends javax.swing.JFrame
         boolean editMode = btn_formlock.getText().equals("VIEW MODE");
         DBUtils_General.toggleFormMode(getContentPane(), editMode);
     }//GEN-LAST:event_btn_formlockActionPerformed
+
+    private void btn_toATActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_toATActionPerformed
+        ActivityTolerance atFrame = new ActivityTolerance(); 
+        atFrame.setVisible(true); 
+        this.dispose(); 
+    }//GEN-LAST:event_btn_toATActionPerformed
 
     /**
      * @param args the command line arguments

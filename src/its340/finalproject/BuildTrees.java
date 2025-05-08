@@ -4,11 +4,55 @@ public class BuildTrees
 {
     public static void BuildAllInterviewQuestionSets()
     {
-        //call other builds for all other questionsets
+        GlobalData.ATQSet = BuildATQSet();
+        
         GlobalData.BloodTypeQSet = BuildBloodTypeQSet();
         GlobalData.TobaccoQSet = BuildTobaccoQSet();
         GlobalData.AlcoholQSet = BuildAlcoholQSet();
         GlobalData.DrugQSet = BuildDrugQSet();
+    }
+    
+    public static Decision BuildATQSet()
+    {
+        Decision activityTree = new Decision();
+        
+        activityTree.createRoot(1, "Did you have more trouble with the activity "
+                + "of “eating” as compared to yesterday?");
+        
+        activityTree.insertYesNode(1, 2, "Understood, thank you for your time."
+                + " Recorded: activity eating, dectol 1, qty 1");
+        activityTree.insertNoNode(1, 3, "Did you have more trouble with the activity "
+                + "of “drinking” as compared to yesterday?");
+                
+        activityTree.insertYesNode(3, 4, "Understood, thank you for your time."
+                + "Recorded: activity drinking, dectol 1, qty 1");
+        activityTree.insertNoNode(3, 5, "Did you have more trouble with the activity "
+                + "of “getting dressed” as compared to yesterday?");
+        
+        activityTree.insertYesNode(5, 6, "Understood, thank you for your time."
+                + "Recorded: activity getting dressed, dectol 1, qty 1");
+        activityTree.insertYesNode(5, 7, "Did you have more trouble with the activity "
+         + "of “walking around the houses” as compared to yesterday?");
+        
+        activityTree.insertYesNode(7, 9, "Understood, thank you for your time."
+                + "Recorded: activity walking around house, dectol 1, qty 1");
+        activityTree.insertNoNode(7, 8, "Did you have more trouble with the activity "
+                + "of “climbing stairs” as compared to yesterday?");
+        
+        activityTree.insertYesNode(8, 10, "Were you able to climb 4-6 steps?");
+        activityTree.insertNoNode(8, 11, "Understood, thank you for your time."
+                + "Recorded: activity climb stairs, dectol 1, qty 1");
+        
+        activityTree.insertYesNode(10, 12, "Were you able to climb 7-10 steps?.");
+        activityTree.insertNoNode(10, 13, "Understood, thank you for your time."
+                + "Recorded: activity climb stairs, dectol 1, qty 0");
+        
+        activityTree.insertYesNode(12, 14, "Understood, thank you for your time."
+                + "Recorded: activity climb stairs, dectol 1, qty 10");
+        activityTree.insertNoNode(12, 15, "Understood, thank you for your time."
+                + "Recorded: activity climb stairs, dectol 0, qty 6");
+        
+        return activityTree;
     }
     
     public static Decision BuildBloodTypeQSet()

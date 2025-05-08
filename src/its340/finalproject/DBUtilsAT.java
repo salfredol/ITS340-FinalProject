@@ -1,14 +1,14 @@
 package its340.finalproject;
 import java.sql.*;
 
-public class DBUtils_GMH 
+public class DBUtilsAT 
 {
-    public static ResultSet GetGMHRecordsFromPID(Connection conn, int pid)
+    public static ResultSet GetATRecordsFromPID(Connection conn, int pid)
     {
         ResultSet rs = null;
         try
         {
-            String qryStoredProc = "{CALL GetGMHRecordsFromPID(?)}";
+            String qryStoredProc = "{CALL GetATRecordsFromPID(?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
             cs.setInt(1, pid);
             rs = cs.executeQuery();
@@ -19,14 +19,14 @@ public class DBUtils_GMH
         }
         return rs;
     }
-    public static ResultSet GetGMHRecord_FromGMHID(Connection conn, int gmhid)
+    public static ResultSet GetATRecordFromATID(Connection conn, int atid)
     {
         ResultSet rs = null;
         try
         {
-            String qryStoredProc = "{CALL GetGMHRecord_FromGMHID(?)}";
+            String qryStoredProc = "{CALL GetATRecordFromATID(?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
-            cs.setInt(1, gmhid);
+            cs.setInt(1, atid);
             rs = cs.executeQuery();
         }
         catch(Exception e)
@@ -35,8 +35,8 @@ public class DBUtils_GMH
         }
         return rs;
     }
-    public static int InsertGMHRecord(Connection conn, int pid,
-            String tob, String alc, String drg, String bldtyp, String rhesus)
+    public static int InsertATRecord(Connection conn, int pid,
+            String atDate, String atTime, String activity, int dectolerance, int actqty)
     {
         int insertStatus = 0;
         try
@@ -44,11 +44,11 @@ public class DBUtils_GMH
             String qryStoredProc = "{CALL InsertGMHRecord(?, ?, ?, ?, ?, ?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
             cs.setInt(1, pid);
-            cs.setString(2, tob);
-            cs.setString(3, alc);
-            cs.setString(4, drg);
-            cs.setString(5, bldtyp);
-            cs.setString(6, rhesus);
+            cs.setString(2, atDate);
+            cs.setString(3, atTime);
+            cs.setString(4, activity);
+            cs.setInt(5, dectolerance);
+            cs.setInt(6, actqty);
             
             insertStatus = cs.executeUpdate();
             return insertStatus;
@@ -59,27 +59,19 @@ public class DBUtils_GMH
         }
         return insertStatus;
     }
-    public static void UpdateGMHRecord(Connection conn, int gmhid, 
-            String tob, String tobquant, String tobdur, String alc, String alcquant, 
-            String alcdur, String drg, String drgtype, String drgdur, String bldtyp, 
-            String rhesus)
+    public static void UpdateATRecord(Connection conn, int atid,
+            String atDate, String atTime, String activity, int dectolerance, int actqty)
     {
         try
         {
-            String qryStoredProc = "{CALL UpdateGMHRecord(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+            String qryStoredProc = "{CALL UpdateATRecord(?, ?, ?, ?, ?, ?,)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
-            cs.setInt(1, gmhid);
-            cs.setString(2, tob);
-            cs.setString(3, tobquant);
-            cs.setString(4, tobdur);
-            cs.setString(5, alc);
-            cs.setString(6, alcquant);
-            cs.setString(7, alcdur);
-            cs.setString(8, drg);
-            cs.setString(9, drgtype);
-            cs.setString(10, drgdur);
-            cs.setString(11, bldtyp);
-            cs.setString(12, rhesus);
+            cs.setInt(1, atid);
+            cs.setString(2, atDate);
+            cs.setString(3, atTime);
+            cs.setString(4, activity);
+            cs.setInt(5, dectolerance);
+            cs.setInt(6, actqty);
             
             cs.executeUpdate();
         }
@@ -88,13 +80,13 @@ public class DBUtils_GMH
             System.out.println(e.getMessage() );
         }
     }
-    public static void DeleteGMHRecord(Connection conn, int gmhid)
+    public static void DeleteATRecord(Connection conn, int atid)
     {
         try
         {
-            String qryStoredProc = "{CALL DeleteGMHRecord(?)}";
+            String qryStoredProc = "{CALL DeleteATRecord(?)}";
             CallableStatement cs = conn.prepareCall(qryStoredProc);
-            cs.setInt(1, gmhid);
+            cs.setInt(1, atid);
             cs.executeUpdate();
             //maybe add integer return to confirm successful deletion
         }
